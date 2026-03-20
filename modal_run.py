@@ -36,6 +36,7 @@ hf_volume = modal.Volume.from_name("hf-home", create_if_missing=True)
     image=image,
     volumes={HF_HOME: hf_volume},
     gpu="A100:4",
+    timeout=60 * 60,
 )
 def spec_it():
     import subprocess
