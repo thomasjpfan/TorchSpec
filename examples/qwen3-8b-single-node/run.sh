@@ -21,7 +21,7 @@
 set -euo pipefail
 set -x
 
-export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0,1,2,3,4,5,6,7}
+export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0,1,2}
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
 ROOT_DIR="$(dirname "$(dirname "$SCRIPT_DIR")")"
 export TORCHINDUCTOR_CACHE_DIR="$ROOT_DIR/cache/compiled_kernels"
@@ -41,7 +41,7 @@ IFS=',' read -ra GPU_ARRAY <<< "$CUDA_VISIBLE_DEVICES"
 TOTAL_GPUS=${#GPU_ARRAY[@]}
 
 TRAIN_GPUS=2
-INFERENCE_GPUS=2
+INFERENCE_GPUS=1
 
 LOCAL_IP=$(python3 -c "import socket; s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM); s.connect(('8.8.8.8', 80)); print(s.getsockname()[0]); s.close()")
 

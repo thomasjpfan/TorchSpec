@@ -24,6 +24,9 @@ image = (
     .workdir("TorchSpec")
     .run_commands("./tools/build_conda.sh current sglang")
     .env({"HF_HOME": HF_HOME})
+    .add_local_file(
+        "examples/qwen3-8b-single-node/run.sh", "/TorchSpec/examples/qwen3-8b-single-node/run.sh"
+    )
 )
 
 hf_volume = modal.Volume.from_name("hf-home", create_if_missing=True)
@@ -35,10 +38,7 @@ hf_volume = modal.Volume.from_name("hf-home", create_if_missing=True)
     gpu="A100:4",
 )
 def spec_it():
-    import os
     import subprocess
-
-    os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3"
 
     subprocess.run(["./examples/qwen3-8b-single-node/run.sh"])
 
